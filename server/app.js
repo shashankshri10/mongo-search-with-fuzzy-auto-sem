@@ -234,6 +234,39 @@ async function findSimilarDocuments(embedding) {
     }
 }
 
+app.get("/all",async (req,res)=>{
+    try{
+        await client.connect();
+        console.log('Connected to MongoDB');
+        const db = client.db("sample_mflix");
+        if(!db){
+            console.log('Database not found');
+            res.json({message: "Database not found"});
+        }
+        const collection = db.collection("movies");
+        if(!collection){
+            console.log('Collection not found');
+            res.json({message: "Collection not found"});
+        }
+        console.log('Collection found, setting up pipeline');
+        const result = await collection.find({}).toArray();
+        console.log("aggregate created");
+        if(!result){
+            console.log('No result found');
+            res.json({message: "No result found"});
+        }
+        console.log('Result found');
+        res.json(result);
+    }
+    catch(err){
+        console.log(err);
+        res.json({message: err, status: "error in connection"});
+    }
+    finally{
+        await client.close();
+    }
+})
+
 app.listen(port, (data,err) => {
     if(err) {
         console.log('Error in running server', err);
