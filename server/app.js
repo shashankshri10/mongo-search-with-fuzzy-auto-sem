@@ -234,6 +234,19 @@ async function findSimilarDocuments(embedding) {
     }
 }
 
+app.get("/movies", async (req, res) => {
+  try {
+    const db = client.db("sample_mflix");
+    const moviesCollection = db.collection("movies");
+    const movies = await moviesCollection.find().limit(5).toArray();
+    res.json(movies);
+  } catch (error) {
+    console.error("Error retrieving movies", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 app.listen(port, (data,err) => {
     if(err) {
         console.log('Error in running server', err);

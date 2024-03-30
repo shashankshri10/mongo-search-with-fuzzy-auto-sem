@@ -11,7 +11,7 @@ const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 const openai = new OpenAI({
   apiKey: process.env.VECTOR_KEY,
-  organization: "org-AN3jaKGEyQ9OOZdWxX5A7JdU"
+  // organization: "org-AN3jaKGEyQ9OOZdWxX5A7JdU"
 });
 
 const corsOptions = {
