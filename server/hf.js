@@ -1,9 +1,28 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const {OpenAI} = require('openai');
 
-// connect to your Atlas cluster
-const uri = "<connection-string>";
-    
+require("dotenv").config();
+
+const uri = process.env.MONGO_URI;
+
 const client = new MongoClient(uri);
+const openai = new OpenAI({
+  apiKey: process.env.VECTOR_KEY,
+  organization: "org-AN3jaKGEyQ9OOZdWxX5A7JdU"
+});
+
+const corsOptions = {
+    origin: "http://localhost:5173",
+    optionsSuccessStatus: 200,
+    methods: "GET, POST, PUT, DELETE"
+}
+
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 async function run() {
   try {
@@ -17,7 +36,7 @@ async function run() {
     const agg = [
       {
         '$vectorSearch': {
-          'index': 'vector-search-tutorial', 
+          'index': 'vector_index', 
           'path': 'plot_embedding', 
           'filter': {
             '$and': [

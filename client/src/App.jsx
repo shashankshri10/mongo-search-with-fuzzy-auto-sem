@@ -114,7 +114,7 @@ function App() {
           <h2 className='font-bold mb-2 pt-2 bg-[orangered] w-full'>This is autocomplete suggestions box</h2>
           <ul>
             {dataAuto.map((movie, index) => {
-              return <li className='cursor-pointer' onClick={(e)=>{
+              return <li className='cursor-pointer hover:bg-[#b9eeb9]' onClick={(e)=>{
                 e.preventDefault()
                 handleMovieSearch(movie.title)
               }} key={index}>{movie.title}</li>
@@ -127,7 +127,7 @@ function App() {
           <h2 className='font-bold mb-2 pt-2 bg-[#8f39c9] w-full'>{searchmsg}</h2>
           <ul>
             {data.map((movie, index) => {
-              return <li className='cursor-pointer' onClick={(e)=>{
+              return <li className='cursor-pointer hover:bg-[#ace1e1]' onClick={(e)=>{
                 e.preventDefault()
                 handleMovieSearch(movie.title)
               }} key={index}>{movie.title}</li>
